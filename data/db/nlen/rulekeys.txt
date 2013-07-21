@@ -1,0 +1,17 @@
+source-has-nonterminal-unary-daughter
+target-has-nonterminal-unary-daughter
+source-has-nonterminal-unary-daughter-except-punct
+target-has-nonterminal-unary-daughter-except-punct
+nonwellformed__gcount<1
+nonwellformed__fcount<3
+nonwellformed__ncount=0
+nonwellformed__gcount__nopunct<1
+nonwellformed__fcount__nopunct<3
+leaf-ratio-score<40;range=80
+abs-height-diff<4
+verb=true__VB*=false___OR___verb=false__VB*=true
+pron=true__PRP*=false___OR___pron=false__PRP*=true
+share-good-alignments
+source-has-punct-at-either-end
+target-has-punct-at-either-end
+words-linked-both-ends

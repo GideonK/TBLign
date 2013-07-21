@@ -1,0 +1,16 @@
+1 source-has-nonterminal-unary-daughter
+2 target-has-nonterminal-unary-daughter
+3 source-has-nonterminal-unary-daughter-except-punct
+4 target-has-nonterminal-unary-daughter-except-punct
+5 nonwellformed__gcount>0
+6 nonwellformed__fcount>0
+7 nonwellformed__ncount>0
+8 nonwellformed__gcount__nopunct>0
+9 nonwellformed__fcount__nopunct>0
+10 leaf-ratio_score>40
+11 linkedleaf-ratio_score>35
+12 abs-height-diff>3
+13 verb=true__VB*=false___OR___verb=false__VB*=true
+14 pron=true__PRP*=false___OR___pron=false__PRP*=true
+15 source-target-has-only-one-capitalization
+16 source-target-has-only-one-number

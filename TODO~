@@ -1,0 +1,7 @@
+- include documentation on rule keys
+- create bottom-up intersection heuristic sets for test set phase
+- include bottom-up heuristic script and update README files
+- improve organisation of working directories during training and testing phases
+- introduce 'make clean' to clean up the results of experiments.
+
+Gideon Kotze, 22 July 2013

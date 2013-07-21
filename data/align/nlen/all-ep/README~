@@ -1,0 +1,57 @@
+These are Dutch/English alignment data sets that were used in experiments for the author's PhD thesis, 'Complementary Approaches to Tree Alignment', published at the University of Groningen in 2013. In this case, they were used as a test set, to be used just once before official reporting of the results. A total of 200 sentence pairs is used. All sentence pairs are taken from the Europarl parallel corpus. The corpus can be found here:
+
+Europarl: http://www.statmt.org/europarl
+
+The gold standard files are under the directory gold/.
+
+- The alignment file with constituents and word alignments is ep-96-07-17.200test.only-nts.sta.xml.
+- The file containing just word alignments is ep-96-07-17.200test.wordalign.sta.xml.
+- The source and target files (Dutch and English respectively) referring to both these sets are ep-96-07-17.200.s.tiger.xml and ep-96-07-17.200.t.tiger.xml.
+
+We have placed automatic output files, produced by other means than TBLign, under auto/. When training with TBLign, the idea is to use, during the cutoff and testing phases, automatic data sets that have been pre-processed to the same degree as the automatic data set in the training data phase (under trainset/). In other words, when training, it is best to use the same initial state annotators for all automatic data sets. For example, we might attempt to improve the output of a Lingua-Align model. Ideally, then, we use data sets in the various different phases - training, cutoff, devtest and, when relevant, test set - that have all been pre-processed by the same Lingua-Align model. We do this so that we can make the application of the learned rules as relevant as possible, with the assumption that this helps to improve performance over using data sets that have been produced using other means.
+
+Currently, we have files containing the following alignments:
+
+- bidirectional word alignments produced by GIZA++, with some alignments in the union removed by the grow-diag heuristic as applied by the Moses system (ep-96-07-17.200test.wordalign.sta.xml)
+- output of the statistical tree aligner Lingua-Align, using the above word alignments, among others, as features in its model, comprising a set of constituent alignments produced by a high-precision model (ep-96-07-17.200test.withalign.sta.xml)
+- output of Lingua-Align, but post-processed by a heuristic which adds alignment based on simple rules. The rules can be applied from source-to-target and from target-to-source. This set contains the intersection of the application of the heuristic from both directions. In future versions, we will include the script as well. The heuristic has been applied to both the word alignment set (ep-96-07-17.200test.wordalign-i.sta.xml) and the Lingua-Align set (ep-96-07-17.200test.withalign-i.sta.xml).
+
+To find out how accurate your data set is, run the Perl script eval-nonterms.pl under the bin/ directory. It goes like this:
+
+perl eval-nonterms.pl -a auto_align -g gold_align -h
+
+The -h flag displays a header, showing which number goes with which. It can be omitted if you would like to print several lines of evaluation using a bash script, for example.
+
+As an example, let us evaluate the Lingua-Align output:
+
+perl ~/TBLign/bin/eval-nonterms.pl -a auto/ep-96-07-17.200test.withalign.sta.xml -g gold/ep-96-07-17.200test.only-nts.sta.xml -h
+
+Precision (all)	Recall (all)	Recall (good)	Recall (fuzzy)	F-score (P_all & R_all)	F-score (P_all & R_good)
+93,4	  61,3	59,0   68,0	74,0   72,3
+
+This shows that the overall precision is 93.4 and the overall recall is 61.3. The reason there is a distinction between the recall of good (confident) and the recall of fuzzy (less confident) links is because for one type of F-score, only the recall of good links is taken into account. This is a distinction that is sometimes made in the word alignment literature. For the sake of completeness, we include both types of F-score.
+
+Now, perhaps we would like to look at the effect of the heuristic measure on the Lingua-Align set. We run:
+
+perl ~/TBLign/bin/eval-nonterms.pl -a auto/SEDE.250devtest.withalign-i.sta.xml -g gold/SEDE.250devtest.only-nts.sta.xml -h
+
+Precision (all)	Recall (all)	Recall (good)	Recall (fuzzy)	F-score (P_all & R_all)	F-score (P_all & R_good)
+81,4	  77,4	77,4   63,5	79,3   79,3
+
+Here, we can see that although precision drops, there is an even greater increase in recall and the resulting F-scores also increase.
+
+If we run eval-nonterms.pl on the word alignment data set, all scores will be 0 since we only measure the accuracy of non-terminal (constituent) alignments. However, note that the word alignment set post-processed with the heuristic method results in a set with a high accuracy, but with a low recall. Note that in contrast with the other data sets, the Lingua-Align score of this one is relatively high, both before and after application of the heuristic, and the word alignment set processed by the heuristic results in a lower score.
+
+So now we have both gold standard and automatic output files for the final testing phase of TBLign. Apart from training, there are also sets for selecting a cutoff point for training and a development test set to be used in the process of finding an optimal model. We have included alignment sets for those phases as well. To view them, go to these directories:
+
+../cutoff
+../devtest
+
+The files for the training data set can be found here:
+
+../trainset
+
+Please refer to the main README file for further information, or contact the author at gidi8ster@gmail.com for any further questions.
+
+Gideon Kotzé
+21 July 2013
