@@ -1,9 +1,14 @@
-- include documentation on rule keys
-- include a proper tutorial
-- include information on link types, etc.
-- create bottom-up intersection heuristic sets for test set phase
-- include bottom-up heuristic script and update README files
-- improve organisation of working directories during training and testing phases
-- introduce 'make clean' to clean up the results of experiments.
+Changes to be implemented
+=========================
 
-Gideon Kotze, 22 July 2013
+- include documentation for rule keys
+- make and add withalign-i and wordalign-i sets (intersection of rule-based bottom-up heuristic) for test set
+- include heuristic scripts, then change README files for each data set where it says "In future versions, we will include the script as well."
+- do not create directories 0, 1, 2, etc. in working directory but do everything in the same directory in order to save space
+- add header to "Best rule to be applied" in Bash scripts to explain the meaning of the rule lines
+- include script to split and merge alignment files
+- introduce the option to write the results of testing and training to a local directory
+- introduce the option to set a maximum number of rules to be learned
+- Other ideas may follow...
+
+Gideon Kotze, 4 August 2013

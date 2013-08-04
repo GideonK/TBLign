@@ -1,6 +1,6 @@
 TBLign version 0.02
-=========================
-
+===================
+é
 INSTALLATION
 
 If you have downloaded it in tarball format (.tar.gz) simply untar it by typing on the terminal:
@@ -34,11 +34,13 @@ TBLign/data/align/nlen/all-ep
 
 for more information.
 
-However, if you would like to use your own data, either update the Makefile variables with the correct paths or run the training and testing scripts (see Makefile) on your own.
+However, if you would like to use your own data, either update the Makefile variables with the correct paths or run the training and testing scripts (see Makefile) on your own. In the future, we might work on easier ways to incorporate your data.
 
 DOCUMENTATION
 
-TBLign is a tool that can be used for tree-to-tree alignment and alignment error correction, using Eric Brill's transformation-based learning algorithm. All trees should be in TIGER-XML format and all alignment files in Stockholm TreeAligner style or Lingua-Align format. See:
+TBLign is a tool that can be used for the alignment of phrase-structure constituents between parallel texts, indicating equivalence. The output can be used for various purposes such as training machine translation systems. It is an implementation of Eric Brill's transformation-based learning algorithm for the problem of tree-to-tree alignment and alignment error correction.
+
+All trees should be in TIGER-XML format and all alignment files in Stockholm TreeAligner style or Lingua-Align format. See:
 
 Stockholm TreeAligner: http://www.cl.uzh.ch/research/paralleltreebanks/treealigner_en.html
 Lingua-Align: https://bitbucket.org/tiedemann/lingua-align/wiki/Home
@@ -47,15 +49,15 @@ For your convenience, we have constructed a Makefile which performs all the oper
 
 The basic phases are:
 
-- make train: Learns a set of best rules to be applied to new data by comparing an initial state annotator (this can range from simple word-aligned data to the output of a constituent aligner).
-- make test: Tests the set of learned rules using another data set.
-- make traintest: Trains and tests.
-- make generate-iterate: Goes through a single iteration in the training phase. This may be useful to check if the software works on the currently selected data sets or if it otherwise produces expected results.
-- make eval-train: Evaluates the automatic output set of the training data set with its gold standard.
+- make train: Learns a set of best rules to be applied to new data by comparing an initial state annotator (this can range from simple word-aligned data to the output of a tree aligner).
+- make cutoff: Applies the learned rules to a held-out data set. The rule that, when applied, leads to the highest score in that set is selected as the last rule in the new set of rules. It therefore functions as a cutoff point. This phase is introduced in order to counteract overtraining.
+- make devtest: Tests the set of learned rules (refined during the cutoff phase) against a development test set. This is meant to be used in the process of refining an existing model.
+- make test: Tests the set of learned rules (refined during the cutoff phase) against a test set. This is only meant to be used once a model has been refined and is to be tested for reporting its performance.
+- make traintest: Trains and tests. Essentially, this runs 'make train', 'make cutoff' and 'make devtest' in sequence.
 
 For training, we need to specify a number of template-like structures that we call "rule keys". They function like a combination of features that, for a given node pair, can be either true or false. During training, every node pair is assigned such a profile of true or false values according to the rule keys specified. Examples of them can be found under data/db/nlen. The optimal list that we used for our thesis experiments is rulekeys.txt.
 
-In the next update, we will explain the syntax of the rule keys in more detail.
+In the near future, we will explain the syntax of the rule keys in more detail. If you understand Perl, the script generate-iterate.pl provides more clues on how the rule keys are processed and the extent to which you can change the values.
 
 We have also included a number of useful Perl scripts under bin/. They are:
 
@@ -64,14 +66,12 @@ We have also included a number of useful Perl scripts under bin/. They are:
 - get-rootcombo-freqs.pl: Takes as input an alignment set and displays the frequencies of category label combinations of aligned nodes.
 - get-n-align.pl: Extracts a specified number of sentence pairs from an alignment set.
 - count-nt-combos.pl: Displays some basic alignment statistics of an alignment set.
-- choose-cutoff.pl: This is used by TBLign, which uses a held-out data set to choose a cutoff point in the learned model, in order to counter overtraining.
+- choose-cutoff.pl: This is used by TBLign, which uses a held-out data set to choose a cutoff point in the learned model, in order to counteract overtraining.
 - check-STA-links.pl: This is used to check if all the alignments specified in an alignment file are valid.
 - apply-best-rule.pl: This is used by TBLign to apply the best learned rule in an iteration to a data set. In training, the updated data set is then used in the next iteration.
 - write-wordalign.pl: This script takes as input an alignment file and writes only the word alignments to output, ignoring any constituent alignments.
 
 For more information on how to use these scripts, run perldoc. For example: perldoc bin/check-STA-links.pl.
-
-For this version, we have changed a number of file names and variables for increased clarity and ease of use. As we have yet to undertake an extensive testing phase, bugs may remain. As we also have some items in the TODO file, we will work on distributing an update in the very near future.
 
 COPYRIGHT AND LICENCE
 
@@ -94,7 +94,7 @@ TBLign/data/align/nlen/testset/gold
 TBLign/data/align/nlen/all-ep/auto
 TBLign/data/align/nlen/all-ep/gold
 
-are modified (annotated) versions of corpora that are freely available online. They are to be used under the same terms as the corpora as found at the websites where they are distributed. At the time of writing, they can be found here:
+are modified (annotated) versions of corpora that are freely available online. They are to be used under the same terms as the corpora that can be found at the websites where they are distributed. At the time of writing, they can be found here:
 
 Europarl: http://www.statmt.org/europarl
 OPUS: http://opus.lingfil.uu.se
@@ -103,4 +103,4 @@ DGT: http://langtech.jrc.it/DGT-TM.html
 If these URLs do not work or if you have any other questions, feel free to contact the author at gidi8ster@gmail.com.
 
 Gideon Kotze
-22 July 2013
+4 August 2013
