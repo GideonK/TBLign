@@ -41,9 +41,9 @@ fi
 
 if [[ ! -d "$DBDIR" ]]; then
         mkdir $DBDIR
-        if [[ ! -d "$DBDIR/$LEVEL" ]]; then
-                mkdir $DBDIR/$LEVEL
-        fi
+fi
+if [[ ! -d "$DBDIR/$LEVEL" ]]; then
+        mkdir $DBDIR/$LEVEL
 fi
 
 echo "Precision (all)	Recall (all)	Recall (good)	Recall (fuzzy)	F-score (P_all & R_all)	F-score (P_all & R_good)" >> $DBDIR/all_eval.txt

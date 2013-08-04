@@ -1,15 +1,15 @@
-TBLign version 0.01
+TBLign version 0.02
 =========================
 
 INSTALLATION
 
 If you have downloaded it in tarball format (.tar.gz) simply untar it by typing on the terminal:
 
-tar -xzvf TBLign0.01.tar.gz
+tar -xzvf TBLign0.0.2.tar.gz
 
 If you have downloaded it in .zip format, use the utility of your choice (eg. WinZip or 7-Zip) or type the following on the terminal:
 
-unzip TBLign0.01.tar.gz
+unzip TBLign0.0.2.tar.gz
 
 The software should be ready for use, with pre-constructed Dutch-to-English treebanks available in the following directories:
 
@@ -34,7 +34,7 @@ TBLign/data/align/nlen/all-ep
 
 for more information.
 
-However, if you would like to use your own data, either update the Makefile variables with the correct paths or run the training and testing scripts on your own.
+However, if you would like to use your own data, either update the Makefile variables with the correct paths or run the training and testing scripts (see Makefile) on your own.
 
 DOCUMENTATION
 
@@ -66,7 +66,8 @@ We have also included a number of useful Perl scripts under bin/. They are:
 - count-nt-combos.pl: Displays some basic alignment statistics of an alignment set.
 - choose-cutoff.pl: This is used by TBLign, which uses a held-out data set to choose a cutoff point in the learned model, in order to counter overtraining.
 - check-STA-links.pl: This is used to check if all the alignments specified in an alignment file are valid.
-- apply-best-rule.pl : This is used by TBLign to apply the best learned rule in an iteration to a data set. In training, the updated data set is then used in the next iteration.
+- apply-best-rule.pl: This is used by TBLign to apply the best learned rule in an iteration to a data set. In training, the updated data set is then used in the next iteration.
+- write-wordalign.pl: This script takes as input an alignment file and writes only the word alignments to output, ignoring any constituent alignments.
 
 For more information on how to use these scripts, run perldoc. For example: perldoc bin/check-STA-links.pl.
 

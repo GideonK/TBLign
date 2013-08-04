@@ -1,15 +1,25 @@
-TBLign version 0.01
-=========================
+TBLign version 0.02
+===================
+
+Version history
+===============
+
+0.0.1:
+- corrected a syntax error and file paths in Makefile
+- made some other changes in Makefile
+- simplified organisation of Bash scripts
+- in test.sh, used option for extended regular expressions (-E) instead of basic (-r) so that the script also runs on OS X systems.
+- introduced 'make clean' to clean working directory files
 
 INSTALLATION
 
 If you have downloaded it in tarball format (.tar.gz) simply untar it by typing on the terminal:
 
-tar -xzvf TBLign0.01.tar.gz
+tar -xzvf TBLign0.0.2.tar.gz
 
 If you have downloaded it in .zip format, use the utility of your choice (eg. WinZip or 7-Zip) or type the following on the terminal:
 
-unzip TBLign0.01.tar.gz
+unzip TBLign0.0.2.tar.gz
 
 The software should be ready for use, with pre-constructed Dutch-to-English treebanks available in the following directories:
 
@@ -34,7 +44,7 @@ TBLign/data/align/nlen/all-ep
 
 for more information.
 
-However, if you would like to use your own data, either update the Makefile variables with the correct paths or run the training and testing scripts on your own.
+However, if you would like to use your own data, either update the Makefile variables with the correct paths or run the training and testing scripts (see Makefile) on your own.
 
 DOCUMENTATION
 

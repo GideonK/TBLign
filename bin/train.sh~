@@ -48,10 +48,6 @@ fi
 
 echo "Precision (all)	Recall (all)	Recall (good)	Recall (fuzzy)	F-score (P_all & R_all)	F-score (P_all & R_good)" >> $DBDIR/all_eval.txt
 
-#if [[ ! -s "$OPT_FILE" ]]; then
-#	perl optimize-similarities.pl -a $TRAIN_ALIGN -s $TRAIN_SOURCE -t $TRAIN_TARGET > $OPT_FILE
-#fi
-
 while [ $END -eq 0 ]
 do
   let NEWLEVEL=$LEVEL+1

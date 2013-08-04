@@ -1,4 +1,6 @@
 - include documentation on rule keys
+- include a proper tutorial
+- include information on link types, etc.
 - create bottom-up intersection heuristic sets for test set phase
 - include bottom-up heuristic script and update README files
 - improve organisation of working directories during training and testing phases
