@@ -66,7 +66,7 @@ traintest:
 	make devtest ## We assume that training and testing phases will only involve the devtest set, and that the test set will only be run occasionally to test an already refined model.
 
 ## This is to be run on the final test set. Use sparingly!
-test:
+testset:
 	$(BINDIR)/./test.sh $(BINDIR) $(DBDIR)/cutoff_levels.txt \
 	$(DBDIR) $(ALIGNDIR) test_output $(TEST_GOLD) \
 	$(TEST_SOURCE) $(TEST_TARGET) $(TEST_AUTO) $(RULEKEYS)

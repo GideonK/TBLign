@@ -63,7 +63,7 @@ clean:
 traintest:
 	make train
 	make cutoff
-	make devtest ## we assume that training and testing phases will only involve the devtest set, and that the test set will only be run occasionally on an already trained model.
+	make devtest ## We assume that training and testing phases will only involve the devtest set, and that the test set will only be run occasionally to test an already refined model.
 
 ## This is to be run on the final test set. Use sparingly!
 test:

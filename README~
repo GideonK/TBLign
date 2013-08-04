@@ -1,15 +1,15 @@
-TBLign version 0.02
-===================
-é
+TBLign version 0.0.2b
+=====================
+
 INSTALLATION
 
 If you have downloaded it in tarball format (.tar.gz) simply untar it by typing on the terminal:
 
-tar -xzvf TBLign0.0.2.tar.gz
+tar -xzvf TBLign0.0.2b.tgz
 
 If you have downloaded it in .zip format, use the utility of your choice (eg. WinZip or 7-Zip) or type the following on the terminal:
 
-unzip TBLign0.0.2.tar.gz
+unzip TBLign0.0.2b.zip
 
 The software should be ready for use, with pre-constructed Dutch-to-English treebanks available in the following directories:
 
@@ -39,6 +39,12 @@ However, if you would like to use your own data, either update the Makefile vari
 DOCUMENTATION
 
 TBLign is a tool that can be used for the alignment of phrase-structure constituents between parallel texts, indicating equivalence. The output can be used for various purposes such as training machine translation systems. It is an implementation of Eric Brill's transformation-based learning algorithm for the problem of tree-to-tree alignment and alignment error correction.
+
+A paper, as well as a (more detailed) thesis chapter have been written on the development and experiments done using this tool by the author:
+
+Kotzé, Gideon. 2012. Transformation-based tree-to-tree alignment. Computational Linguistics in The Netherlands Journal. Vol. 2. pp. 71-96. http://www.clinjournal.org/node/30
+
+Kotzé, Gideon. 2013. Complementary approaches to tree alignment: Combining statistical and rule-based methods. PhD Thesis. University of Groningen. Chapter 7, pp. 113-155. http://gideonkotze.nl/downloads/GideonThesis_Electronic.pdf
 
 All trees should be in TIGER-XML format and all alignment files in Stockholm TreeAligner style or Lingua-Align format. See:
 
@@ -102,5 +108,5 @@ DGT: http://langtech.jrc.it/DGT-TM.html
 
 If these URLs do not work or if you have any other questions, feel free to contact the author at gidi8ster@gmail.com.
 
-Gideon Kotze
+Gideon Kotzé
 4 August 2013

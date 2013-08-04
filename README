@@ -1,15 +1,15 @@
-TBLign version 0.02
-===================
+TBLign version 0.0.2b
+=====================
 
 INSTALLATION
 
 If you have downloaded it in tarball format (.tar.gz) simply untar it by typing on the terminal:
 
-tar -xzvf TBLign0.0.2.tar.gz
+tar -xzvf TBLign0.0.2b.tgz
 
 If you have downloaded it in .zip format, use the utility of your choice (eg. WinZip or 7-Zip) or type the following on the terminal:
 
-unzip TBLign0.0.2.tar.gz
+unzip TBLign0.0.2b.zip
 
 The software should be ready for use, with pre-constructed Dutch-to-English treebanks available in the following directories:
 
@@ -58,7 +58,7 @@ The basic phases are:
 - make train: Learns a set of best rules to be applied to new data by comparing an initial state annotator (this can range from simple word-aligned data to the output of a tree aligner).
 - make cutoff: Applies the learned rules to a held-out data set. The rule that, when applied, leads to the highest score in that set is selected as the last rule in the new set of rules. It therefore functions as a cutoff point. This phase is introduced in order to counteract overtraining.
 - make devtest: Tests the set of learned rules (refined during the cutoff phase) against a development test set. This is meant to be used in the process of refining an existing model.
-- make test: Tests the set of learned rules (refined during the cutoff phase) against a test set. This is only meant to be used once a model has been refined and is to be tested for reporting its performance.
+- make testset: Tests the set of learned rules (refined during the cutoff phase) against a test set. This is only meant to be used once a model has been refined and is to be tested for reporting its performance.
 - make traintest: Trains and tests. Essentially, this runs 'make train', 'make cutoff' and 'make devtest' in sequence.
 
 For training, we need to specify a number of template-like structures that we call "rule keys". They function like a combination of features that, for a given node pair, can be either true or false. During training, every node pair is assigned such a profile of true or false values according to the rule keys specified. Examples of them can be found under data/db/nlen. The optimal list that we used for our thesis experiments is rulekeys.txt.

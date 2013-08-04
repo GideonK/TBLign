@@ -1,6 +1,9 @@
 Version	history
 ===============
 
+0.0.2b August 4 2013
+  - corrected some typos in documentation
+
 0.0.2 August 4 2013
   - corrected a syntax error and file paths in Makefile
   - made some other changes in Makefile
