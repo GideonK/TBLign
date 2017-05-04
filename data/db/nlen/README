@@ -1,0 +1,188 @@
+Using features
+==============
+
+If you already understand how TBLign implements the transformation-based learning algorithm or if you wish to just go on straight ahead with learning about the features with which you can experiment, feel free to skip ahead to the 'Back to the rule keys' section.
+
+How the features are organised and used in training
+===================================================
+
+TBLign aims to improve aligments between syntactic phrase-structure trees of translated sentences. The alignment is physically indicated as occurring between the nodes of the trees, and since any node dominates its terminals, and the terminals are words, the node alignment indicates phrasal equivalence. For example, the node labeled NP (noun phrase) dominates the terminals "the dog", meaning that an alignment between the NP and the Dutch NP, which dominates "de hond" implicates equivalence between "the dog" and "de hond". There may be other non-terminals between these local ROOT non-terminals. Whether or not this is the case, we may say that these root NPs each dominate a tree - or subtree, in the context of the full graph.
+
+Note: When we purely refer to the tree graph, the word "node" is sufficient. Nodes are divided between terminals and non-terminals. The word "non-terminal" is used to refer to any node which has one or more children, hence the name. Terminals are at the "bottom" of the tree, the furthest from the root node, and having no children. They are also referred to as "leaves". When we refer to the grammatical function that a node represents, the non-terminals are (usually) constituents, and the terminals are words. The terminals may also be morphemes or something else, depending on the granularity, therefore the more abstract term "token" may also be used.
+
+Back to the topic at hand.
+
+TBLign uses a list of features that are extracted from constituent (or node, or subtree) pairs (where each pair is ROOTED by a single non-terminal node, as with the NPs in our example above). In our transformation-based learning implementation, each feature for each node pair (in the implementation we call a feature a rule key) is assigned a value of either 0 or 1, depending on whether the feature to which it refers holds for that particular node pair. For example, one key states that among the words dominated by the two subtrees, only side has a verb. For each subtree pair, this can be either true or false. Eventually, for each node pair, a feature profile is constructed consisting of a series of binary digits (0s and 1s, 1 for true and 0 for false). There are as many digits as there are features specified. For example, subtree pair X__Y has the profile of 011, meaning that feature 1 is not applicable, but feature 2 and 3 are.
+
+We use two data sets in training: (1) the so-called gold standard, which is basically the training data (usually manually aligned trees), as well as (2) a set consisting of the same sentence pairs but in which the alignments can be improved and is used to learn rules (called the hypothesis set or automatic data set since it's typically the output of another aligner).
+
+During training, we first count the number of cases where specific feature profiles (i.e. specific combinations of binary digits corresponding to features, as with 011 above) occur. For example, a spesific profile may occur 10 times, another 20, etc. They are also associated with whether or not those node pairs in question are aligned or not in the hypothesis set. For example, feature profile x occurs 20 times, 12 of them are aligned and 8 are not. This is important since we want to learn which feature combinations are associated both positively and negatively with subtree pairs (in terms of how likely they are to be linked).
+
+While training, we continuously compare our found rules to the gold standard. Now, for example, if we compare these 8 unaligned node pairs mentioned above to their equivalents in the gold standard, we might notice that some of them are right and some are wrong. And if we should choose to align them in the hypothesis set, some of these wrongly unaligned node pairs would turn out to be correct, as they are actually aligned in the gold standard, and doing this would thus improve the alignments in the automatic output set, as long as the number of correct changes exceeds the number of incorrect changes.
+
+The object of each iteration in the training phase is to find the one rule that, when applied to the hypothesis set, would lead to the best improvement (in terms of corrections made) when the output is compared to its gold standard.
+
+So for example, feature profile x can be associated with 8 node pairs that are unaligned and 12 that are aligned in the hypothesis set. If we align those 8 unaligned node pairs, we might find that 6 of those would be correct if we compare it to the gold standard (2 are incorrect). If we remove the links of those 12 aligned node pairs, we might find that 4 of them would be correct, i.e. they are in fact unaligned in the gold standard (8 incorrect). So applying the rule associated with feature profile x ADD is better than applying the rule associated with feature profile x REMOVE, because 'x ADD' leads to an improvement of 6-2 = 4 (6 correct, 2 incorrect) and 'x REMOVE' leads to an 'improvement' of 4-8=-4 (4 correct, 8 incorrect) which is actually worse than before. Similarly, we can now proceed to look at other feature profiles and continue to compare them to the gold standard until we find a feature profile associated with a certain action (ADD or REMOVE) that leads to the most improvement in the automatic data set.
+
+After we find the best rule of them all, we apply it to the hypothesis set to create a new one. This one is now more accurate than the previous one when compared to the gold standard (we have already proved it to be true during iteration). Now we do this all over again, using the newly created set to discover new rules, until we cannot find a rule that leads to any improvement. The list of all rules discovered and applied is our model, which may be applied in sequence to new data sets.
+
+The cutoff phase
+================
+
+After training, we apply the learned rules, one by one, to a new data set called the cutoff set. We don't learn rules anymore but we can still check what kind of effect these rules have on new data by comparing the output to its own gold standard. We now might find that sometimes, an applied rule does not lead to any improvement at all on the new data. We now select a cutoff point in the list of learned rules which is the rule that leads to the highest score in the cutoff set. We now only use this new subset of rules for application to new data.
+
+Why do we do this? The reason is that our training phase learns very specific complex rules that are most likely only applicable to a very specific set of data to this degree. The more rules that are learned, the more tailored they become to the training data set itself. This leads to a phenomenon called 'overtraining'. This means that we might learn a set of rules that lead to a very high score on the training data set itself, but when we apply them to new data, the score is significantly lower. Of course we want the score to be higher, so we select a subset of rules that, at least in theory, should be more generally applicable to other data sets as well. Our held-out data set is meant to be representative of these other data sets.
+
+Here is an example. Let's say that we have learned 80 rules in the training phase. The final rule leads to an F-score of 85 (compared to the gold standard of the training data set). We now apply all these rules on the cutoff data set. The final rule leads to an F-score of 80 (compared to the gold standard of the cutoff data set). However, rule 60, when applied, leads to an F-score of 82, and no other rule beats that. So we select the first 60 rules and this is our new model.
+
+Testing
+=======
+
+Testing is the same process as the cutoff phase, except we do not actually select a cutoff point. Instead, we use the new set of rules (eg. 60 rules instead of 80) and test it against yet another data set. The 'development test set' is meant to be used repeatedly during experiments. We can experiment in a few different ways:
+
+- change the values of the rule keys in the .txt file
+- add or delete rule keys in the .txt file
+- use output from different so-called 'initial state annotators'
+
+An initial state annotator is whatever produced the data you begin with. For example, you can experiment with learning rules using only word alignments in your hypothesis set (this is the minimum required, along with phrase structure trees with part-of-speech labels for the words and category labels for the constituents). Or you can choose to learn rules on the output of an already existing tree aligner such as Lingua-Align, attempting to correct its output instead of aligning from scratch.
+
+One important note on initial state annotators: It is highly recommended that you use the output of the same annotator on all your automatic (hypothesis) data sets: training, cutoff, devtest and test set. This way, you ensure that you properly train your models according to the input that you expect when aligning new trees.
+
+Another note on test sets: We recommend that you run your experiments on your devtest set but keep another set ready for your final test, if you would like to report your experiments in a publication. For this we have separate testing phases ('make devtest' and 'make testset').
+
+Back to the rule keys
+=====================
+
+The rule keys (features) themselves are written in an easily understood syntax. As mentioned above, they refer to features that are extracted from subtree pairs in order to build feature profiles of them.
+
+Each node pair can be seen as representing a source and a target tree (subtree pair), of which these nodes are the roots. As such, we can extract a wide variety of features such as:
+
+- descendents (direct descendents are called children or daughters)
+- ancestors (direct ancestors are called parents)
+- terminals (words) that they dominate
+- alignments shared between the roots, descendents or terminals, as well as the types of alignments
+- subtree similarity measures (how similar they are to each other)
+- specific part-of-speech (POS) or category labels (CAT)
+
+and so on. Here is the list of features that we can currently implement:
+
+source-has-nonterminal-unary-daughter
+-------------------------------------
+This rule key is assigned the value 1 (true) if the source-side node (root node of the source-side subtree) has a non-terminal unary daughter (child), i.e. a single daughter which is a constituent, and 0 otherwise. An example would be "S" (sentence root node) which is also an NP (for example in the case of an incomplete sentence), so NP would be the only child of the S, and would itself dominate the whole sentence.
+
+The intuition behind checking for unary relations is the assumption that similar constructions on both sides are perhaps more likely to be aligned in gold standards, and inversely, less likely if only one side has a unary relation.
+
+target-has-nonterminal-unary-daughter
+-------------------------------------
+As above, but for the target-side node.
+
+source-has-nonterminal-unary-daughter-except-punct
+--------------------------------------------------
+The same as source-has-nonterminal-unary-daughter, but ignores children which are punctuation. For example, an S can have both an NP and a full stop as children, but the relation is considered unary because we ignore punctuation.
+
+The reason for using this feature is that some parsers link the root node (or sentence node, if different) to the final token if it is a punctuation mark, and others do not, and that if this phenomenon is ignored, the unary relation is otherwise essentially the same kind of construction.
+
+target-has-nonterminal-unary-daughter-except-punct
+--------------------------------------------------
+As source-has-nonterminal-unary-daughter-except-punct, but for the target-side node.
+
+nonwellformed__gcount
+---------------------
+This feature is combined with a number, such as:
+
+nonwellformed__gcount<1
+nonwellformed__gcount=1
+nonwellformed__gcount>2
+nonwellformed__gcount>=1
+nonwellformed__gcount<=3
+
+etc.
+
+or a range:
+
+nonwellformed__gcount=0-2
+where the minimum value is included but the maximum value is not. This is explained later.
+
+To determine whether or not this gets 1 or 0, first we look at the well-formedness of the subtree pair with respect to their word alignments. Briefly speaking, they are well-formed if all the alignments of these trees (and note that this particular feature is only concerned with word alignments) are only shared between them. In other words, between subtrees A and B, all word alignments in tree A go to tree B and vice versa. No word alignments from tree A go to tree C, D, etc. and similarly with tree B. They are only between A and B. This is an important concept in tree-to-tree alignment. Generally speaking, well-formed tree pairs are alignment candidates, but if they are not well-formed, they shouldn't be aligned. However, because word alignments are not 100% correct, we allow for some violations, hence the existence of this feature.
+
+The 'gcount' part means that we only look at so-called 'good' word alignments. If you look at the alignment file, an alignment can be either 'good' or 'fuzzy'. The former means that the alignment is very confident. The system or the person who has constructed the gold standard has decided that there is a high probability that this alignment is correct. 'Fuzzy', of course, means less confident. We still think the probability is high enough so that they should be aligned, but less so than with 'good' alignments. For example, a convention can be made that probabilities of more than 0.8 is good and between 0.4 and 0.8 is fuzzy, or something to that effect, and this is indicated in the XML. Here is an example of such an aligned node.
+
+<align author="Lingua-Align" prob="0.77378699301537356980" type="good">
+      <node node_id="s1_1001" type="nt" treebank_id="1"/>
+      <node node_id="s1_520" type="nt" treebank_id="2"/>
+</align>
+
+This means that subtrees with root node ID s1_1001 in the source side and with root node ID s1_520 in the target side, both of which are non-terminals ("nt") are aligned with each other. The aligner was Lingua-Align, which gave the alignment a probability of 0.77 to be correct. This was judged a "good" alignment by the software.
+
+Of course, if your XML does not indicate whether a link is good or fuzzy, you cannot use this feature. In the future, we may allow for using a feature based on probabilities instead of the good/fuzzy paradigm. In the meantime, we include a script, prob-to-gfzy.pl, under /path/to/TBLign/bin to convert these probabilities so that the XML displays the good/fuzzy values.
+
+So what does something like 'nonwellformed_gcount<2' mean? This checks if there are less than two good word alignments which violate the well-formedness constraint. In other words, less than two (0 or 1) good word alignments are allowed to NOT be shared between subtrees A and B. So a maximum of 1 alignment can be shared between trees A and C or A and D, or B and C or B and D, etc.
+
+It does not check for other types of alignments, i.e. fuzzy word alignments or constituent alignments. So if you have three fuzzy word alignments that violate the well-formedness constraint but only one good word alignment, this rule key will still get a value of 1.
+
+Let's get back to the ranges, which we promised to explain earlier. The above example was given:
+
+nonwellformed__gcount=0-2
+
+The general idea was that in principle, you could specify more than one range, although this has not yet been implemented. So you could use a range of 0-2 as well as 2-4. This is essentially the same as 0-4, but in order to stop these two different ranges to overlap, we have decided to make 0-2 mean 0 to 1, and 2-4 means 2 to 3. This is in retrospect somewhat confusing and nitpicky, and we are planning to fix this in the future.
+
+Note: If you use other link types than 'good' or 'fuzzy', it is possible to edit the code in 'generate-iterate.pl', under the subroutine 'getRuleStats'. Note that you have to declare and use the appropriate variables. In the future, we might add more information for assistance with this.
+
+nonwellformed__fcount
+---------------------
+Used in exactly the same way as 'nonwellformed__gcount', this instead checks for fuzzy word alignments.
+
+nonwellformed__ncount
+---------------------
+Although there are both good and fuzzy constituent alignments, we currently make no distinction in the rule keys. The reason is that any violations whatsoever on the constituent level (any non-terminal descendents of the source and target-tree nodes) is usually enough reason to not align the subtrees in question.
+
+Just like the above, this checks for violations of the well-formedness constraint, but restricted to constituents (non-terminals). Currently, we only check for descendents and not ancestors.
+
+nonwellformed__gcount__nopunct
+------------------------------
+Just as with nonwellformed__gcount, but ignoring any terminals (words) that are punctuation. For example, if we set it at <2, and there are two good word alignments which violate the well-formedness constraint but where one of them involves a punctuation mark, the latter is ignored and this rule key will still get the value 1. The reasoning for this is the same as for "source-has-nonterminal-unary-daughter-except-punct" and "target-has-nonterminal-unary-daughter-except-punct".
+
+nonwellformed__fcount__nopunct
+------------------------------
+Just as the above, but for fuzzy links only.
+
+leaf-ratio
+----------
+This is the ratio of the leaf count (number of terminal nodes or "words") of the source and target-side subtrees. For example, the source-side tree may have 4 leaves and the target-side 5. The ratio is therefore 0.8 (4/5).
+
+Just as with the well-formedness feature, you can set absolute values or ranges. Examples:
+
+leaf-ratio>80
+leaf-ratio=80-100 (the maximum value - 100 - is included but not the minimum value. We can also write this as 'anything over 80 up to and including 100'. The reason is so we can specify ranges next to each other such as 60-80, 80-100 without having the situation that 80 belongs to both of them. And usually if we specify something like 80-100, we would like to include 100 as well. So we include the highest value but not the lowest one.) Edit: We are planning to also change this feature similar to the non-wellformedness features above (see discussion under "nonwellformed__gcount=0-2" above).
+
+leaf-ratio-score
+----------------
+This is a score that is based on the leaf ratio. The idea is that using just the leaf ratio may lead to a bias between using subtrees with lots of leaves and using subtrees with very few leaves. For example, it is quite conceivable that we can align a subtree with two leaves to one with four. But it is perhaps less so when the one side has five leaves and the other ten, even though the ratio is the same.
+
+We therefore present a measure of subtree similarity that makes use of both the leaf ratio and the difference in the number of leaves. Simply put, we subtract a so-called penalty score that is based on the leaf count difference from the leaf ratio. To avoid a skewed figure, we weight the leaf count difference by dividing it with a normalisation factor which we call 'range'.
+
+Here is an example. Let's say we have six leaves on one side and eight on the other. The ratio is 6/8=3/4=0.75. The difference count is 2. Let's say we use a range of 80 to normalise the ratio. The leaf ratio score is therefore
+
+0.75-(2/80)
+=0.75-0.025
+=0.725
+
+The greater the actual leaf count difference is, the greater the penalty score and the more will be subtracted from the leaf ratio, so that 5 out of 10 leaves is less likely to be aligned than 2 out of 4.
+
+The syntax goes like this:
+
+leaf-ratio-score<x;range=x
+
+where x is any number. The first x can also be a range, as with leaf-ratio. Two examples:
+
+leaf-ratio-score<40;range=80
+
+The first value is the leaf ratio multiplied by 100 to give it a percentage value. The range stays the same. This line means that if the eventual score is less than 40, with a range (penalty score denominator) of 80, the key value will be 1.
+
+leaf-ratio-score=40-60;range=70
+
+This means that if the leaf ratio score is more than 40 but less than or including 60, with a range of 70, the key value will be 1. Edit: in the future this will also include 40.
+
+linkedleaf-ratio
+----------------
+This is the ratio of all the leaves in the source and target-side subtrees to all the linked leaves.

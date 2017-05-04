@@ -160,7 +160,7 @@ __END__
 
 =head1 NAME
 
-write-wordalign.pl
+write-wordalign.pl - takes a tree alignment set and write only the word alignments to output
 
 =head1 SYNOPSIS
 
@@ -168,12 +168,12 @@ perl write-wordalign.pl alignment_file
 
 =head1 DESCRIPTION
 
-This script takes as input an automatically produced Lingua-Align XML align file and writes those links where both node references refer to terminal nodes to an output file. In other words, it writes only the word alignments to output.
+This script takes as input a tree alignment file in Stockholm TreeAligner XML (also used in Lingua-Align and TBLign) format and writes those links where both node references refer to terminal nodes to standard output in STA-XML format. In other words, it writes only the word alignments to output.
 
-It also assumes that the treebank files exist in the current directory.
+It also assumes that the alignment file refers to existing treebanks. If no paths are given in the XML, they should be in the current directory.
 
 =head1 AUTHOR
 
-Gideon KotzE<eacute>, E<lt>g.j.kotze@rug.nlE<gt>
+Gideon KotzE<eacute>, E<lt>gidi8ster@gmail.comE<gt>
 
 =cut

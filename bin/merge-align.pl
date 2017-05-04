@@ -72,11 +72,11 @@ __END__
 
 =head1 NAME
 
-merge-STA-training.pl
+merge-align.pl - merges a set of alignment files
 
 =head1 SYNOPSIS
 
-perl merge-STA-training.pl -a first_alignment_file -b second_alignment_file -c output_alignment_file [ -d first_source_treebank_file ] [ -e second_source_treebank_file ] [ -f output_source_treebank_file ] [ -g first_target_treebank_file ] [ -h second_target_treebank_file ] [ -i output_target_treebank_file ]
+perl merge-align.pl -a first_alignment_file -b second_alignment_file -c output_alignment_file [ -d first_source_treebank_file ] [ -e second_source_treebank_file ] [ -f output_source_treebank_file ] [ -g first_target_treebank_file ] [ -h second_target_treebank_file ] [ -i output_target_treebank_file ]
 
 =head1 OPTIONS
 
@@ -128,9 +128,11 @@ Furthermore, the following occurs:
 
 =back
 
+Merging a set of alignment files can be useful, for example, while creating gold standards or training data sets.
+
 =head1 AUTHOR
 
-Gideon KotzE<eacute>, E<lt>g.j.kotze@rug.nlE<gt>
+Gideon KotzE<eacute>, E<lt>gidi8ster@gmail.comE<gt>
 
 =cut
 

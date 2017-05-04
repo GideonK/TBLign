@@ -67,6 +67,10 @@ $alignments->cleanUp();
 
 __END__
 
+=head1 NAME
+
+get-rootcombo-freqs.pl - returns a sorted list of category label pairs according to how frequently the nodes to which they refer are aligned to each other in a specified alignment set
+
 =head1 DESCRIPTION
 
 This script takes as input a reference to an tree-to-tree alignment set of files:
@@ -77,15 +81,15 @@ This script takes as input a reference to an tree-to-tree alignment set of files
 
 =item * -t As above, but the target side treebank file
 
-=item * -a An alignment file with references to the treebank files, in STA (Stockholm TreeAligner) format
+=item * -a An alignment file with references to the treebank files, in STA (Stockholm TreeAligner) XML format
 
 =back
 
-A count is made for the category label combination of every linked node pair. In this way, we can see how often certain combinations of category labels are linked to each other.
+A count is made for the category label combination of every linked node pair. In this way, we can see how often certain combinations of category labels are linked to each other. This may be useful for purposes such as checking the consistency of manual alignment or devising features to be used in training for tree alignment software.
 
 =head1 AUTHOR
 
-Gideon KotzE<eacute>, E<lt>g.j.kotze@rug.nlE<gt>
+Gideon KotzE<eacute>, E<lt>gidi8ster@gmail.comE<gt>
 
 =cut
 

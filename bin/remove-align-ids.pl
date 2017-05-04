@@ -63,7 +63,7 @@ __END__
 
 =head1 NAME
 
-remove-align-ids.pl
+remove-align-ids.pl - writes to output a subset of an tree alignment set (one alignment file and two treebank files) containing sentences with IDs NOT specified in a given text file (in other words, we want to exclude these IDs)
 
 =head1 SYNOPSIS
 
@@ -73,7 +73,7 @@ perl remove-align-ids.pl -l remove.txt -a alignment_file -s source_treebank_file
 
 =over
 
-=item * -l text file containing IDs of sentence pairs to be removed. For this version of the script, we assume that they are the same for source and target sides. However, sentence pairs do not need to be in counting order, we only look for matches.
+=item * -l text file containing IDs of sentence pairs to be removed. For now, we assume that they are the same for source and target sides. However, sentence pairs do not need to be in counting order, we only look for matches.
 
 =item * -a input alignment file in Stockholm TreeAligner format
 
@@ -93,15 +93,9 @@ perl remove-align-ids.pl -l remove.txt -a alignment_file -s source_treebank_file
 
 This script takes as input an XML alignment file in Stockholm TreeAligner format, extracts the head and all sentences NOT specified in a provided text file (one ID per line) and writes each sentence to a specified output file in counting order. It also takes as input the corresponding treebank files (source and target, in Tiger-XML format) and does the same.
 
-=over
+This means that some sentence IDs will CHANGE for some sentences - beware!
 
-=item * This means that some sentence IDs will CHANGE for some sentences - beware!
-
-=item * This is done in the context of creating manual test data but where we want to exclude specific sentences. It is of course also applicable to training data.
-
-=item * Output is assumed to be used for processing by the Stockholm TreeAligner.
-
-=back
+This can be useful if the user would like to exclude some sentence pairs if they are, for example, not suitable for use in the creating of a gold standard or for training a tree aligner.
 
 =head1 AUTHOR
 

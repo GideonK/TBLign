@@ -138,8 +138,10 @@ This script takes as input a source and target-side treebank pair which may be o
 
 =back
 
+Compressed files (.gz) are automatically detected and can be used as input.
+
 =head1 AUTHOR
 
-Gideon KotzE<eacute>, E<lt>g.j.kotze@rug.nlE<gt>
+Gideon KotzE<eacute>, E<lt>gidi8ster@gmail.comE<gt>
 
 =cut

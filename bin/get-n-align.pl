@@ -79,12 +79,12 @@ __END__
 
 =head1 NAME
 
-get-n-align.pl
+get-n-align.pl - returns a subset of an alignment set
 
 =head1 SYNOPSIS
 perl get-n-align -a alignment_file [ -s source_treebank_file ] [ -t target_treebank_file ] -A output_alignment_file [ -S output_source_treebank_file ] [ -T output_target_treebank_file ] -b begin_ID -e nr_of_sents
 
-head1 OPTIONS
+=head1 OPTIONS
 
 =over
 
@@ -114,6 +114,6 @@ This script takes as input an alignment file set, consisting of a parallel treeb
 
 =head1 AUTHOR
 
-Gideon KotzE<eacute>, E<lt>g.j.kotze@rug.nlE<gt>
+Gideon KotzE<eacute>, E<lt>gidi8ster@gmail.comE<gt>
 
 =cut

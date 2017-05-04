@@ -1,6 +1,7 @@
 Changes to be implemented
 =========================
 
+- include conversion scripts (Stanford/Alpino to Tiger-XML and vice versa)
 - include documentation for rule keys
 - make and add withalign-i and wordalign-i sets (intersection of rule-based bottom-up heuristic) for test set
 - include heuristic scripts, then change README files for each data set where it says "In future versions, we will include the script as well."
@@ -10,4 +11,4 @@ Changes to be implemented
 - introduce the option to set a maximum number of rules to be learned
 - Other ideas may follow...
 
-Gideon Kotzé, 4 August 2013
+Gideon Kotzé, 13 March 2014

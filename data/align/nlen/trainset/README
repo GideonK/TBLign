@@ -26,7 +26,7 @@ To find out how accurate your data set is, run the Perl script eval-nonterms.pl 
 
 perl eval-nonterms.pl -a auto_align -g gold_align -h
 
-The -h flag displays a header, showing which number goes with which. It can be omitted if you would like to print several lines of evaluation using a bash script, for example.
+The -h flag displays a header, showing which number goes with which. It can be omitted if you would like to print several lines of evaluation using a Bash script, for example.
 
 As an example, let us evaluate the Lingua-Align output:
 
@@ -57,4 +57,4 @@ So now we have both gold standard and automatic output files for the training ph
 Please refer to the main README file for further information, or contact the author at gidi8ster@gmail.com for any further questions.
 
 Gideon Kotzé
-21 July 2013
+24 January 2014

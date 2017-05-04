@@ -222,11 +222,11 @@ perl check-STA-links.pl -a Stockholm_Treealigner_XML_file -s source_treebank_fil
 
 This script takes as input a Stockholm TreeAligner (Lingua-Align) tree alignment file and two treebanks (source and target), and checks if all the node references in the alignment file exist in the treebanks. If a node is not found, a warning is written to standard error output for that node.
 
-It is automatically discovered whether the treebank files are in Alpino-XML or Tiger-XML, and whether they, as well as the alignment file, are compressed or not.
+It is automatically discovered whether the treebank files are in Alpino-XML or Tiger-XML, and whether they, as well as the alignment file, are compressed or not (checking for .gz extension).
 
 =head1 AUTHOR
 
-Gideon KotzE<eacute>, E<lt>g.j.kotze@rug.nlE<gt>
+Gideon KotzE<eacute>, E<lt>gidi8ster@gmail.comE<gt>
 
 =cut
 

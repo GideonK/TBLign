@@ -290,7 +290,7 @@ This script is, at the time of writing, used automatically as part of the TBLign
 
 =head1 AUTHOR
 
-Gideon KotzE<eacute>, E<lt>g.j.kotze@rug.nlE<gt>
+Gideon KotzE<eacute>, E<lt>gidi8ster@gmail.comE<gt>
 
 =cut
 

@@ -13,7 +13,7 @@ DGT: http://langtech.jrc.it/DGT-TM.html
 The gold standard files are under the directory gold/.
 
 - The alignment file with constituents and word alignments is SEDE.250train.only-nts.sta.xml.
-- The file containing just word alignment is SEDE.250train.wordalign.sta.xml.
+- The file containing just word alignments is SEDE.250train.wordalign.sta.xml.
 - The source and target files (Dutch and English respectively) referring to both these sets are SEDE.250.s.tiger.xml and SEDE.250.t.tiger.xml.
 
 We have placed automatic output files, produced by other means than TBLign, under auto/, with the intention of using experiments to improve their accuracy. Currently, we have files containing the following alignments:

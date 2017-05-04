@@ -71,7 +71,7 @@ if ($opt_g) {
 }
 
 (my $pos1, my $pos2, my $combopos, my $pos1match, my $pos2match, my $absheightthresh, my $rulenumber, my $rulekey, my $source_has_caps, my $target_has_caps, my $source_has_number, my $target_has_number, my $temp);
-my $count=0;
+# my $count=0;
 # (my $count, my $nonwellformed_exists, my $leafratio_exists, my $leafcountdiff_exists, my $linkedleafratio_exists, my $linkedleafcountdiff_exists, my $absheightdiff_exists)=(0,0,0,0,0,0,0);
 my %exists=();
 my @rulenumbers=();
@@ -2107,7 +2107,7 @@ __END__
 
 =head1 DESCRIPTION
 
-This script takes as input a reference to a tree-to-tree alignment set of files:
+This script is part of the tree alignment tool TBLign, which implements the transformation-based learning algorithm. It takes as input a reference to a tree-to-tree alignment set of files:
 
 =over
 
@@ -2119,11 +2119,11 @@ This script takes as input a reference to a tree-to-tree alignment set of files:
 
 =item * -A An alignment file with references to the treebank files, in STA (Stockholm TreeAligner) format. This is the file that will be updated with the best rule (if -g is specified) after comparison with the gold standard file.
 
-=item * -o Include this with an argument if a file exists with optimized values for similarity scores (leaf and linked leaf).
+=item * -o (currently obsolete) Include this with an argument if a file exists with optimized values for similarity scores (leaf and linked leaf).
 
-=item * -g Include this (with no argument) if we expect to find and print a best rule. If -g is specified, a gold standard file (-a) is also needed.
+=item * -g Include this (with no argument) if we intend to find and apply a best rule to the file specified by -A. If -g is specified, a gold standard file (-a) is also needed in order to find the best rule to be applied.
 
-=item * -r This is the file containing an instantiation of a set of rule templates.
+=item * -r This is a file containing an instantiation of a set of rule templates.
 
 =item * -M Statistics on the gold standard alignment file are written to this file.
 
@@ -2141,11 +2141,13 @@ This script takes as input a reference to a tree-to-tree alignment set of files:
 
 =back
 
-We extract all kinds of statistics about the treebanks and the alignments and write them to database files. We use these statistics and some pre-specified features to create sets of complex rules. We iterate through all non-terminal node pairs and find out which of these rules apply, either adding or removing or removing a link depending on whether the current node pair is aligned or not (the alignments are not physically changed but statistics of eventual adding or deletion are kept). If -g is specified, we compare the results against a gold standard and find the best rule to be applied, writing it to output. If the intent is to just extract statistics so that an already existing rule can be applied, -g is not specified, so in this case we do not look for a best rule.
+We extract all kinds of statistics about the treebanks and the alignments and write them to text files. We use these statistics and some pre-specified features to create sets of complex rules. We iterate through all non-terminal node pairs and find out which of these rules apply, either adding or removing a link depending on whether the current node pair is aligned or not (the alignments are not physically changed but statistics of eventual adding or deletion are kept). If -g is specified, we compare the results against a gold standard and find the best rule to be applied, writing it to output. If the intent is to just extract statistics so that an already existing rule can be applied, -g is not specified, so in this case we do not look for a best rule.
+
+In TBLign, this script is called by a few different Bash scripts depending on whether we are training (learning a new set of rules) or testing (applying a learned set of rules).
 
 =head1 AUTHOR
 
-Gideon KotzE<eacute>, E<lt>g.j.kotze@rug.nlE<gt>
+Gideon KotzE<eacute>, E<lt>gidi8ster@gmail.comE<gt>
 
 =cut
 

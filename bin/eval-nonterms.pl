@@ -1,22 +1,3 @@
-## takes as input two Lingua-Align XML output files and calculates the precision, recall and F-scores (with recall good and recall fuzzy) of all links containing at least one nonterminal node
-## assumes the links to the treebanks are valid and are used to determine whether the nodes are nonterminals
-## also assumes the treebank names in both files are the same and warns when they are different.
-## Output is standard and consists of a row of header values and the corresponding values on the second row. Displaying the header can be switched off using an option. This is for in case the script is called more than once to add values to the table.
-
-## Note:
-## It is assumed that the sentences in the output align file are to be compared with the sentences in the gold standard that have the same sentence IDs.
-## Links between terminal and nonterminal nodes are regarded as nonterminal node links.
-
-# USAGE: perl eval-nonterms.pl [OPTIONS]
-#
-# OPTIONS:
-#
-# -h --> If present, displays the header.
-# -g Gold standard align file
-# -a Align file with automatic output.
-#
-# Example: perl eval-nonterms.pl -h -g nl-en-strict_count-1.norm.newalign -a nl-en-strict_126-1.norm.newalign
-
 #!/usr/bin/perl
 use lib $FindBin::Bin.'/../lib';
 use Getopt::Std;
@@ -215,7 +196,7 @@ sub getLinksA {
 				die;
 			}
 			$fullid=$id1.";".$id2;
-			if (($node1type eq "nt") || ($node2type eq "nt")) { ## only one needs to be nonterminal - for practical reasons we regard an alignment between a terminal and a non-terminal as a non-terminal alignment since in our case it was made by the constituent aligner and not by the word alignment software.
+			if (($node1type eq "nt") || ($node2type eq "nt")) { ## only one needs to be nonterminal - for practical reasons we regard an alignment between a terminal and a nonterminal as a nonterminal alignment since in our case it was made by the constituent aligner and not by the word alignment software.
 				if ($linktype eq "good") {
 					$ntgoodA{$fullid}=1;
 					$ntgoodcountA++;
@@ -656,15 +637,15 @@ perl eval-nonterms.pl -a auto_align -g gold_align [ -h ]
 
 =head1 DESCRIPTION
 
-This script takes as input two XML output files in the style used by the manual tree alignment tool Stockholm TreeAligner and the automatic tree aligner Lingua-Align and calculates the precision, recall and F-scores (with both recall=good and recall=fuzzy) of all links containing at least one non-terminal node.
+This script takes as input two XML output files in the style used by the manual tree alignment tool Stockholm TreeAligner and the automatic tree aligner Lingua-Align and calculates the precision, recall and F-scores (with both recall=good and recall=fuzzy) of all links containing at least one nonterminal node.
 
 =over
 
-=item * It assumes that the links to the treebanks are valid and are used to determine whether or not the nodes are non-terminals. It also assumes the treebank names in both files are the same and gives a warning when they are different.
+=item * It assumes that the links to the treebanks are valid and are used to determine whether or not the nodes are nonterminals. It also assumes the treebank names in both files are the same and gives a warning when they are different.
 
 =item * Evaluation results are written to standard output and consists of a row of header values and the corresponding values on the second row. Displaying the header can be switched off by omitting the -h option. This is for in case the script is called more than once to add values to a table, for example.
 
-=item * NOTE: It is assumed that the sentences in the automatic alignment file are to be compared with the sentences in the gold standard that have the same sentence IDs. Links between terminal and non-terminal nodes are regarded as non-terminal node links.
+=item * NOTE: It is assumed that the sentences in the automatic alignment file are to be compared with the sentences in the gold standard that have the same sentence IDs. Links between terminal and nonterminal nodes are regarded as nonterminal node links.
 
 =back
 

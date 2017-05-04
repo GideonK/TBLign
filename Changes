@@ -1,6 +1,10 @@
 Version	history
 ===============
 
+0.02c August 5 2013
+  - deleted some unnecessary files
+  - moved Makefile from bin/ to parent directory
+
 0.0.2b August 4 2013
   - corrected some typos in documentation
 

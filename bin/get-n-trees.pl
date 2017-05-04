@@ -3,7 +3,7 @@ use strict;
 use FindBin qw($Bin);
 use lib $FindBin::Bin.'/../lib';
 use Align;
-use Treebank;
+use Tiger;
 use Getopt::Std;
 
 use vars qw/$opt_a $opt_s $opt_t $opt_A $opt_S $opt_T $opt_b $opt_n $opt_c/;
@@ -54,7 +54,7 @@ else {
 $align->closeFile($acompressed,$afile);
 
 if (defined $opt_s) {
-  my $strees=new Treebank(-filehandle=>"SIN",-file=>$opt_s);
+  my $strees=new Tiger(-filehandle=>"SIN",-file=>$opt_s);
   (my $sfile, my $scompressed)=$strees->openFile();
   (my $shead, my $sbody, my $stail)=$strees->getHeadBodyTail($sfile);
   my $ssents=$strees->getSents($sfile,$sbody);
@@ -65,7 +65,7 @@ if (defined $opt_s) {
 }
 
 if (defined $opt_t) {
-  my $ttrees=new Treebank(-filehandle=>"TIN",-file=>$opt_t);
+  my $ttrees=new Tiger(-filehandle=>"TIN",-file=>$opt_t);
   (my $tfile, my $tcompressed)=$ttrees->openFile();
   (my $thead, my $tbody, my $ttail)=$ttrees->getHeadBodyTail($tfile);
   my $tsents=$ttrees->getSents($tfile,$tbody);
@@ -79,12 +79,12 @@ __END__
 
 =head1 NAME
 
-get-n-align.pl
+get-n-align.pl - returns a subset of an alignment set
 
 =head1 SYNOPSIS
 perl get-n-align -a alignment_file [ -s source_treebank_file ] [ -t target_treebank_file ] -A output_alignment_file [ -S output_source_treebank_file ] [ -T output_target_treebank_file ] -b begin_ID -e nr_of_sents
 
-head1 OPTIONS
+=head1 OPTIONS
 
 =over
 
@@ -114,6 +114,6 @@ This script takes as input an alignment file set, consisting of a parallel treeb
 
 =head1 AUTHOR
 
-Gideon KotzE<eacute>, E<lt>g.j.kotze@rug.nlE<gt>
+Gideon KotzE<eacute>, E<lt>gidi8ster@gmail.comE<gt>
 
 =cut

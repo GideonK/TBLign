@@ -518,13 +518,13 @@ sub getLeafDifference {
   my $difference;
   (my $sleafcount, my $tleafcount)=(0,0);
 
-  if (defined @{$$sleaves{$snonterm}}) {
+  if (@{$$sleaves{$snonterm}}) {
     foreach (@{$$sleaves{$snonterm}}) {
       $sleafcount++;
     }
   }
 
-  if (defined @{$$tleaves{$tnonterm}}) {
+  if (@{$$tleaves{$tnonterm}}) {
     foreach (@{$$tleaves{$tnonterm}}) {
       $tleafcount++;
     }
@@ -673,7 +673,7 @@ sub getPOScombos {
   (my $smatch, my $tmatch)=(0,0);
   my $part1; my $part2;
 
-  if (defined @{$$sleaves{$snonterm}}) {
+  if (@{$$sleaves{$snonterm}}) {
    foreach (@{$$sleaves{$snonterm}}) {
      if ($spos =~ /(\S+)\*$/) {
 	$part1=$1;
@@ -692,7 +692,7 @@ sub getPOScombos {
     warn "No leaves defined for source node $snonterm!";
   }
 
-  if (defined @{$$tleaves{$tnonterm}}) {
+  if (@{$$tleaves{$tnonterm}}) {
    foreach (@{$$tleaves{$tnonterm}}) {
      if ($tpos =~ /(\S+)\*$/) {
 	$part2=$1;
@@ -718,7 +718,7 @@ sub getCapsCombos {
   (my $self, my $snonterm, my $tnonterm, my $sleaves, my $tleaves, my $sword, my $tword)=@_;
   (my $source_has_caps, my $target_has_caps)=(0,0);
 
-  if (defined @{$$sleaves{$snonterm}}) {
+  if (@{$$sleaves{$snonterm}}) {
     foreach (@{$$sleaves{$snonterm}}) {
       if (defined $$sword{$_}) {
 	if ($$sword{$_} =~ /[A-Z]/) {
@@ -731,7 +731,7 @@ sub getCapsCombos {
     }
   }
 
-  if (defined @{$$tleaves{$tnonterm}}) {
+  if (@{$$tleaves{$tnonterm}}) {
     foreach (@{$$tleaves{$tnonterm}}) {
       if (defined $$tword{$_}) {
 	if ($$tword{$_} =~ /[A-Z]/) {
@@ -751,7 +751,7 @@ sub getNumberCombos {
   (my $self, my $snonterm, my $tnonterm, my $sleaves, my $tleaves, my $sword, my $tword)=@_;
   (my $source_has_number, my $target_has_number)=(0,0);
 
-  if (defined @{$$sleaves{$snonterm}}) {
+  if (@{$$sleaves{$snonterm}}) {
     foreach (@{$$sleaves{$snonterm}}) {
       if (defined $$sword{$_}) {
 	if ($$sword{$_} =~ /[0-9]/) {
@@ -764,7 +764,7 @@ sub getNumberCombos {
     }
   }
 
-  if (defined @{$$tleaves{$tnonterm}}) {
+  if (@{$$tleaves{$tnonterm}}) {
     foreach (@{$$tleaves{$tnonterm}}) {
       if (defined $$tword{$_}) {
 	if ($$tword{$_} =~ /[0-9]/) {
@@ -856,7 +856,7 @@ sub shareIdenticalSpecialWords { ## returns 1 if the current node pair share at 
   my %swords=();
   my $word;
 
-  if (defined @{$$sleaves{$snonterm}}) {
+  if (@{$$sleaves{$snonterm}}) {
     foreach(@{$$sleaves{$snonterm}}) {
       if (defined $$sword{$_}) {
 	$word=$$sword{$_};
@@ -867,7 +867,7 @@ sub shareIdenticalSpecialWords { ## returns 1 if the current node pair share at 
     }
   }
 
-  if (defined @{$$tleaves{$tnonterm}}) {
+  if (@{$$tleaves{$tnonterm}}) {
     foreach(@{$$tleaves{$tnonterm}}) {
       if (defined $$tword{$_}) {
 	$word=$$tword{$_};
@@ -890,13 +890,13 @@ sub hasIdenticalStrings { ## ignoring punctuation
   
   (my $sstring, my $tstring)=("","");
   
-  if (defined @{$$sleaves{$snonterm}}) {
+  if (@{$$sleaves{$snonterm}}) {
     foreach(@{$$sleaves{$snonterm}}) {
       $sstring=$sstring." ".$$sword{$_};
     }
   }
 
-  if (defined @{$$tleaves{$tnonterm}}) {
+  if (@{$$tleaves{$tnonterm}}) {
     foreach(@{$$tleaves{$tnonterm}}) {
       $tstring=$tstring." ".$$tword{$_};
     }
@@ -924,7 +924,7 @@ sub shareGoodAlignments { ## only looking at word alignments
   my $leaf; my $sourcelinked; my $link;
   my %exists=();
   
-  if (defined @{$$sleaves{$snonterm}}) {
+  if (@{$$sleaves{$snonterm}}) {
     foreach(@{$$sleaves{$snonterm}}) {
       $leaf=$_;
       if (defined $$slink{$leaf}) {
@@ -933,7 +933,7 @@ sub shareGoodAlignments { ## only looking at word alignments
     }
   }
 
-  if (defined @{$$tleaves{$tnonterm}}) {
+  if (@{$$tleaves{$tnonterm}}) {
     foreach(@{$$tleaves{$tnonterm}}) {
       $leaf=$_;
       if (defined $$tlink{$leaf}) {
@@ -963,7 +963,7 @@ sub hasSpecialCharacterOneSide { ## currently, checking if < or > or & or = or *
   (my $source_has_special, my $target_has_special, my $found, my $i)=(0,0,0,0);
   my $curnode;
 
-  if (defined @{$$sleaves{$snonterm}}) {
+  if (@{$$sleaves{$snonterm}}) {
     $i=0;
     if (defined $$sleaves{$snonterm}[$i]) {
       while (($found == 0)  && (defined $$sleaves{$snonterm}[$i])) {
@@ -981,7 +981,7 @@ sub hasSpecialCharacterOneSide { ## currently, checking if < or > or & or = or *
       
   $found=0;
 
-  if (defined @{$$tleaves{$tnonterm}}) {
+  if (@{$$tleaves{$tnonterm}}) {
     $i=0;
     if (defined $$tleaves{$tnonterm}[$i]) {
       while (($found == 0)  && (defined $$tleaves{$tnonterm}[$i])) {
@@ -1011,7 +1011,7 @@ sub hasPunctAtEitherEnd {
   my $size; my $end; my $leaf;
 
   if ($side eq 's') {
-    if (defined @{$$sleaves{$snonterm}}) {
+    if (@{$$sleaves{$snonterm}}) {
       if (defined $$sleaves{$snonterm}[0]) {
 	$leaf=$$sleaves{$snonterm}[0];
 	if (defined $$sword{$leaf}) {
@@ -1032,7 +1032,7 @@ sub hasPunctAtEitherEnd {
   }
 
   elsif ($side eq 't') {
-    if (defined @{$$tleaves{$tnonterm}}) {
+    if (@{$$tleaves{$tnonterm}}) {
       if (defined $$tleaves{$tnonterm}[0]) {
 	$leaf=$$tleaves{$tnonterm}[0];
 	if (defined $$tword{$leaf}) {
@@ -1091,14 +1091,14 @@ sub wordsLinkedBothEnds {
   my $found=0;
 #   my $sstring=""; my $tstring="";
 
-  if (defined @{$$sleaves{$snonterm}}) {
+  if (@{$$sleaves{$snonterm}}) {
     foreach(@{$$sleaves{$snonterm}}) {
       $s_exists{$_}=1;
 #       $sstring=$sstring." ".$$sword{$_};
     }
   }
 
-  if (defined @{$$tleaves{$tnonterm}}) {
+  if (@{$$tleaves{$tnonterm}}) {
     foreach(@{$$tleaves{$tnonterm}}) {
       $t_exists{$_}=1;
 #       $tstring=$tstring." ".$$tword{$_};

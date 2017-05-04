@@ -1,13 +1,26 @@
 Changes to be implemented
 =========================
 
-- include documentation for rule keys
+- finish documentation for rule keys
+- "In the meantime, we include a script, prob-to-gfzy.pl, to convert these probabilities so that the XML displays the good/fuzzy values."
+---> find out which are the exact ranges for fuzzy and good probabilities given by Lingua-Align
+- do not create directories 0, 1, 2, etc. in working directory but do everything in the same directory in order to save space
+- implement an easy error analysis module
+- make TBLign faster!
+--> instead of writing a TIGER-XML at the application of every rule, write it to an easy to read data structure and only rewrite/change the relevant data
+--> write extracted feature data to database files (?)
+- fix ranges so that e.g. 0-2, 80-100 include all numbers
+- make XML reading more robust (currently only a very specific form of TIGER-XML readable)
+- include conversion scripts (Stanford/Alpino to Tiger-XML and vice versa)
+- include script to produce learning curves using R
 - make and add withalign-i and wordalign-i sets (intersection of rule-based bottom-up heuristic) for test set
 - include heuristic scripts, then change README files for each data set where it says "In future versions, we will include the script as well."
-- do not create directories 0, 1, 2, etc. in working directory but do everything in the same directory in order to save space
 - add header to "Best rule to be applied" in Bash scripts to explain the meaning of the rule lines
+- inverse -h option of eval-nonterms.pl (use only -h if one wishes the header to be omitted) and follow up with Bash scripts which make use of eval-nonterms.pl
 - introduce the option to write the results of testing and training to a local directory
 - introduce the option to set a maximum number of rules to be learned
+- work on better structuring generate-iterate.pl script
+- long-term: GUI for features
 - Other ideas may follow...
 
-Gideon Kotzé, 4 August 2013
+Gideon Kotzé, 8 April 2015

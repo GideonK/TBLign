@@ -1,0 +1,10 @@
+## Ignore these directories
+work
+experiments
+
+## Ignore these files
+\#*
+**/*~
+**/*.tmp
+**/.DS_Store
+**/*.tci

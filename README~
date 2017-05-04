@@ -13,24 +13,24 @@ unzip TBLign0.0.2b.zip
 
 The software should be ready for use, with pre-constructed Dutch-to-English treebanks available in the following directories:
 
-TBLign/data/align/nlen/trainset/auto
-TBLign/data/align/nlen/trainset/gold
-TBLign/data/align/nlen/cutoff/auto
-TBLign/data/align/nlen/cutoff/gold
-TBLign/data/align/nlen/devtest/auto
-TBLign/data/align/nlen/devtest/gold
-TBLign/data/align/nlen/testset/auto
-TBLign/data/align/nlen/testset/gold
-TBLign/data/align/nlen/all-ep/auto
-TBLign/data/align/nlen/all-ep/gold
+./data/align/nlen/trainset/auto
+./data/align/nlen/trainset/gold
+./data/align/nlen/cutoff/auto
+./data/align/nlen/cutoff/gold
+./data/align/nlen/devtest/auto
+./data/align/nlen/devtest/gold
+./data/align/nlen/testset/auto
+./data/align/nlen/testset/gold
+./data/align/nlen/all-ep/auto
+./data/align/nlen/all-ep/gold
 
 See the respective README files in:
 
-TBLign/data/align/nlen/trainset
-TBLign/data/align/nlen/cutoff
-TBLign/data/align/nlen/devtest
-TBLign/data/align/nlen/testset
-TBLign/data/align/nlen/all-ep
+./data/align/nlen/trainset
+./data/align/nlen/cutoff
+./data/align/nlen/devtest
+./data/align/nlen/testset
+./data/align/nlen/all-ep
 
 for more information.
 
@@ -55,33 +55,45 @@ For your convenience, we have constructed a Makefile which performs all the oper
 
 The basic phases are:
 
-- make train: Learns a set of best rules to be applied to new data by comparing an initial state annotator (this can range from simple word-aligned data to the output of a tree aligner).
+- make train: Learns a set of best rules to be applied to new data by comparing the application of a set of rules to the output of an initial state annotator (this can range from simple word-aligned data to the output of a tree aligner) to a gold standard.
+
 - make cutoff: Applies the learned rules to a held-out data set. The rule that, when applied, leads to the highest score in that set is selected as the last rule in the new set of rules. It therefore functions as a cutoff point. This phase is introduced in order to counteract overtraining.
+
 - make devtest: Tests the set of learned rules (refined during the cutoff phase) against a development test set. This is meant to be used in the process of refining an existing model.
-- make test: Tests the set of learned rules (refined during the cutoff phase) against a test set. This is only meant to be used once a model has been refined and is to be tested for reporting its performance.
+
+- make testset: Tests the set of learned rules (refined during the cutoff phase) against a test set. This is only meant to be used once a model has been refined and is to be tested for reporting its performance.
+
 - make traintest: Trains and tests. Essentially, this runs 'make train', 'make cutoff' and 'make devtest' in sequence.
 
-For training, we need to specify a number of template-like structures that we call "rule keys". They function like a combination of features that, for a given node pair, can be either true or false. During training, every node pair is assigned such a profile of true or false values according to the rule keys specified. Examples of them can be found under data/db/nlen. The optimal list that we used for our thesis experiments is rulekeys.txt.
+For training, we need to specify a number of template-like structures that we call "rule keys". They function like a combination of features where each feature, for a given node pair, can be either true or false, resulting in a binary value. During training, every node pair is assigned such a profile of true or false values according to the rule keys specified. Examples of rule key lists can be found under data/db/nlen. The optimal list that we used for our thesis experiments is rulekeys.txt.
 
-In the near future, we will explain the syntax of the rule keys in more detail. If you understand Perl, the script generate-iterate.pl provides more clues on how the rule keys are processed and the extent to which you can change the values.
+In the near future, we will explain the syntax of the rule keys in more detail. For those proficient in Perl, the script generate-iterate.pl provides more clues on how the rule keys are processed and the extent to which you can change the values.
 
-We have also included a number of useful Perl scripts under bin/. They are:
+We have also included a number of useful Perl scripts under ./bin/. They are:
 
-- remove-align-ids.pl: Removes sentences with specific IDs in an alignment file as specified in a text file.
-- merge-STA-training.pl: Merges two alignment sets.
-- get-rootcombo-freqs.pl: Takes as input an alignment set and displays the frequencies of category label combinations of aligned nodes.
-- get-n-align.pl: Extracts a specified number of sentence pairs from an alignment set.
+- remove-align-ids.pl: Removes sentences with specific IDs in an alignment file as specified in a text file. This may be used, for example, during manual training data construction - one may find that certain sentence pairs that one has extracted from parallel treebanks are not fit for use in training data construction, and one wishes to remove those sentence pairs.
+
+- merge-STA-training.pl: Merges two alignment sets. For example, one may wish to increase the size of the training data set by merging two separate sets from different domains.
+
+- get-rootcombo-freqs.pl: Takes as input an alignment set and displays the frequencies of category label combinations of aligned nodes. This may be used to inspect the consistency of alignments. For example, there may be many NP-NP alignments and PP-PP, but NP-PP is rare. This may indicate that the NP-PP alignments are either wrong or should receive fuzzy (less confident) links.
+
+- get-n-align.pl: Extracts a specified number of sentence pairs from an alignment set. This is useful if, for example, one decides to use only a set number of sentence pairs for training, or if one wishes to extract training and test sets separately from a single set (for example: 300 training data sentence pairs and 50 test data sentence pairs from a set of 350 sentence pairs).
+
 - count-nt-combos.pl: Displays some basic alignment statistics of an alignment set.
+
 - choose-cutoff.pl: This is used by TBLign, which uses a held-out data set to choose a cutoff point in the learned model, in order to counteract overtraining.
-- check-STA-links.pl: This is used to check if all the alignments specified in an alignment file are valid.
+
+- check-STA-links.pl: This is used to check if all the alignments specified in an alignment file are valid. More specifically, all alignment IDs specified by the alignment file should point to actually existing nodes withe same IDs in the treebank files. This script checks whether this is true or not.
+
 - apply-best-rule.pl: This is used by TBLign to apply the best learned rule in an iteration to a data set. In training, the updated data set is then used in the next iteration.
-- write-wordalign.pl: This script takes as input an alignment file and writes only the word alignments to output, ignoring any constituent alignments.
+
+- write-wordalign.pl: This script takes as input an alignment file and writes only the word alignments to output, ignoring any constituent alignments. This may be useful, for example, if a set of parallel sentences is extracted from an already aligned parallel treebank, with the purpose of creating a gold standard or training data set, or if you would like to apply the aligner to an unaligned version of a gold standard for later comparison.
 
 For more information on how to use these scripts, run perldoc. For example: perldoc bin/check-STA-links.pl.
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2013 by Gideon Kotze
+Copyright (C) 2014 by Gideon Kotzé
 
 This is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.12.4 or,
@@ -89,16 +101,16 @@ at your option, any later version of Perl 5 you may have available.
 
 The data sets found under the following directories:
 
-TBLign/data/align/nlen/trainset/auto
-TBLign/data/align/nlen/trainset/gold
-TBLign/data/align/nlen/cutoff/auto
-TBLign/data/align/nlen/cutoff/gold
-TBLign/data/align/nlen/devtest/auto
-TBLign/data/align/nlen/devtest/gold
-TBLign/data/align/nlen/testset/auto
-TBLign/data/align/nlen/testset/gold
-TBLign/data/align/nlen/all-ep/auto
-TBLign/data/align/nlen/all-ep/gold
+./data/align/nlen/trainset/auto
+./data/align/nlen/trainset/gold
+./data/align/nlen/cutoff/auto
+./data/align/nlen/cutoff/gold
+./data/align/nlen/devtest/auto
+./data/align/nlen/devtest/gold
+./data/align/nlen/testset/auto
+./data/align/nlen/testset/gold
+./data/align/nlen/all-ep/auto
+./data/align/nlen/all-ep/gold
 
 are modified (annotated) versions of corpora that are freely available online. They are to be used under the same terms as the corpora that can be found at the websites where they are distributed. At the time of writing, they can be found here:
 
@@ -109,4 +121,4 @@ DGT: http://langtech.jrc.it/DGT-TM.html
 If these URLs do not work or if you have any other questions, feel free to contact the author at gidi8ster@gmail.com.
 
 Gideon Kotzé
-4 August 2013
+24 January 2014
