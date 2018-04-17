@@ -1,0 +1,42 @@
+These are Dutch/English alignment data sets that were used in experiments for the author's PhD thesis, 'Complementary Approaches to Tree Alignment', published at the University of Groningen in 2013. In this case, they were used to compare the performance of TBLign with Lingua-Align using ten-fold cross validation. A total of 350 sentence pairs is used. All sentence pairs are taken from the Europarl parallel corpus, which can also be found in the other data sets used for TBLign training. The corpus can be found here:
+
+Europarl: http://www.statmt.org/europarl
+
+The gold standard files are under the directory gold/.
+
+- The alignment file with constituents and word alignments is EP_350full.only-nts.sta.xml.
+- The file containing just word alignments is EP_350full.wordalign.sta.xml.
+- The source and target files (Dutch and English respectively) referring to both these sets are EP_350full.s.tiger.xml and EP_350full.t.tiger.xml.
+
+We have placed automatic output files, produced by Lingua-Align, under auto/. Currently, we have files containing the following alignments:
+
+- bidirectional word alignments produced by GIZA++, with some alignments in the union removed by the grow-diag heuristic as applied by the Moses system (EP_350full.wordalign.sta.xml)
+- output of the statistical tree aligner Lingua-Align, using the above word alignments, among others, as features in its model, comprising a set of constituent alignments produced by a high-precision model (EP_350full.withalign.sta.xml)
+- the same treebank files as under gold/.
+
+To find out how accurate your data set is, run the Perl script eval-nonterms.pl under the bin/ directory. It goes like this:
+
+perl eval-nonterms.pl -a auto_align -g gold_align -h
+
+The -h flag displays a header, showing which number goes with which. It can be omitted if you would like to print several lines of evaluation using a bash script, for example.
+
+As an example, let us evaluate the Lingua-Align output:
+
+perl ~/TBLign/bin/eval-nonterms.pl -a auto/EP_350full.withalign.sta.xml -g gold/EP_350full.only-nts.sta.xml -h
+
+Precision (all)	Recall (all)	Recall (good)	Recall (fuzzy)	F-score (P_all & R_all)	F-score (P_all & R_good)
+93,2	  56,0	55,4   52,0	70,0   69,5
+
+This shows that the overall precision is 93.2 and the overall recall is 56.0. The reason there is a distinction between the recall of good (confident) and the recall of fuzzy (less confident) links is because for one type of F-score, only the recall of good links is taken into account. This is a distinction that is sometimes made in the word alignment literature. For the sake of completeness, we include both types of F-score.
+
+To view the other data sets associated with the different phases of the training and testing of TBLign, go to:
+
+../trainset
+../cutoff
+../devtest
+../testset
+
+Please refer to the main README file for further information, or contact the author at gidi8ster@gmail.com for any further questions.
+
+Gideon Kotzé
+21 July 2013
