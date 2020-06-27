@@ -1,4 +1,4 @@
-TBL=$(HOME)/TBLign
+TBL=$(HOME)/TBL
 BINDIR=$(TBL)/bin
 BASE_ALIGNDIR=$(TBL)/data/align/nlen
 BASE_DBDIR=$(TBL)/data/db/nlen

@@ -89,8 +89,6 @@ We have also included a number of useful Perl scripts under ./bin/. They are:
 
 - write-wordalign.pl: This script takes as input an alignment file and writes only the word alignments to output, ignoring any constituent alignments. This may be useful, for example, if a set of parallel sentences is extracted from an already aligned parallel treebank, with the purpose of creating a gold standard or training data set, or if you would like to apply the aligner to an unaligned version of a gold standard for later comparison.
 
-- eval-nonterms.pl: This script compares an automatically produced alignment set to a gold standard and calculates the precision and recall of all alignments between non-terminal nodes. Two balanced F-scores are provided as a result: One of them takes only the recall of confident links into account and the other one takes all of them into account. See the above papers for an explanation.
-
 For more information on how to use these scripts, run perldoc. For example: perldoc bin/check-STA-links.pl.
 
 COPYRIGHT AND LICENCE
