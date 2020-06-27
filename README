@@ -1,6 +1,8 @@
 TBLign version 0.0.2b
 =====================
 
+*** NOTE: This is old software and untested on modern Perl and Bash. It is likely that you may experience some issues. I am planning to reimplement this software using Python in the not too distant future. ***
+
 INSTALLATION
 
 If you have downloaded it in tarball format (.tar.gz) simply untar it by typing on the terminal:
@@ -93,13 +95,7 @@ We have also included a number of useful Perl scripts under ./bin/. They are:
 
 For more information on how to use these scripts, run perldoc. For example: perldoc bin/check-STA-links.pl.
 
-COPYRIGHT AND LICENCE
-
-Copyright (C) 2014 by Gideon Kotzé
-
-This is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.12.4 or,
-at your option, any later version of Perl 5 you may have available.
+COPYRIGHT AND LICENCE: See LICENSE
 
 The data sets found under the following directories:
 
@@ -118,9 +114,9 @@ are modified (annotated) versions of corpora that are freely available online. T
 
 Europarl: http://www.statmt.org/europarl
 OPUS: http://opus.lingfil.uu.se
-DGT: http://langtech.jrc.it/DGT-TM.html
+DGT: https://ec.europa.eu/jrc/en/language-technologies/dgt-translation-memory
 
-If these URLs do not work or if you have any other questions, feel free to contact the author at gidi8ster@gmail.com.
+If these URLs do not work or if you have any other questions, feel free to contact the author at dr.gideon.kotze@gmail.com.
 
 Gideon Kotzé
-24 January 2014
+24 January 2014 (UPDATED 27 June 2020)
