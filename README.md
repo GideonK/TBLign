@@ -7,24 +7,24 @@ This software was tested using Perl 5. It does not require external libraries.
 
 After unzipping or untarring the download file, the software should be ready for use, with pre-constructed Dutch/English treebanks available in the following directories:
 
-./data/align/nlen/trainset/auto
-./data/align/nlen/trainset/gold
-./data/align/nlen/cutoff/auto
-./data/align/nlen/cutoff/gold
-./data/align/nlen/devtest/auto
-./data/align/nlen/devtest/gold
-./data/align/nlen/testset/auto
-./data/align/nlen/testset/gold
-./data/align/nlen/all-ep/auto
-./data/align/nlen/all-ep/gold
+./data/align/nlen/trainset/auto  
+./data/align/nlen/trainset/gold  
+./data/align/nlen/cutoff/auto  
+./data/align/nlen/cutoff/gold  
+./data/align/nlen/devtest/auto  
+./data/align/nlen/devtest/gold  
+./data/align/nlen/testset/auto  
+./data/align/nlen/testset/gold  
+./data/align/nlen/all-ep/auto  
+./data/align/nlen/all-ep/gold  
 
 See the respective README files in:
 
-./data/align/nlen/trainset
-./data/align/nlen/cutoff
-./data/align/nlen/devtest
-./data/align/nlen/testset
-./data/align/nlen/all-ep
+./data/align/nlen/trainset  
+./data/align/nlen/cutoff  
+./data/align/nlen/devtest  
+./data/align/nlen/testset  
+./data/align/nlen/all-ep  
 
 for more information.
 
