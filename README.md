@@ -90,9 +90,9 @@ The software was developed within the framework of the STEVIN project Parse and 
 ## SOURCES
 The data sets found under the aforementioned directories are modified (annotated) versions of corpora that are freely available online. They are to be used under the same terms as the corpora that can be found at the websites where they are distributed. At the time of writing, they can be found here:
 
-Europarl: http://www.statmt.org/europarl
-OPUS: http://opus.lingfil.uu.se
-DGT: https://ec.europa.eu/jrc/en/language-technologies/dgt-translation-memory
+* **Europarl**: http://www.statmt.org/europarl
+* **OPUS**: http://opus.lingfil.uu.se
+* **DGT**: https://ec.europa.eu/jrc/en/language-technologies/dgt-translation-memory
 
 Feel free to contact the author at dr.gideon.kotze@gmail.com with any questions.
 
