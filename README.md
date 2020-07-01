@@ -96,6 +96,6 @@ The data sets found under the aforementioned directories are modified (annotated
 
 Feel free to contact the author at dr.gideon.kotze@gmail.com with any questions.
 
-Gideon Kotzé
-24 January 2014 (UPDATED 30 June 2020)
+Gideon Kotzé  
+24 January 2014 (UPDATED 30 June 2020)  
 www.gideonkotze.co.za
